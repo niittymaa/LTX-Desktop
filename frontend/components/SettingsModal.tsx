@@ -25,6 +25,7 @@ import { LtxApiKeyInput } from "./LtxApiKeyInput";
 import { ApiKeySettingsBlock } from "./settings/ApiKeySettingsBlock";
 import { AboutSettingsSection } from "./settings/AboutSettingsSection";
 import { AssistantSettingsSection } from "./settings/AssistantSettingsSection";
+import { McpSettingsSection } from "./settings/McpSettingsSection";
 import { CudaPerformanceSection } from "./settings/CudaPerformanceSection";
 import { EnhanceSettingsSection } from "./settings/EnhanceSettingsSection";
 import { LegacyTextEncodingSection } from "./settings/LegacyTextEncodingSection";
@@ -591,6 +592,8 @@ export function SettingsScreen({
                   onOpenGeminiApiKeys={() => geminiApiKey.openAndFocus()}
                 />
               </div>
+
+              <McpSettingsSection />
 
               <SettingsSubsection showDivider title="Advanced controls">
                 <SettingToggle

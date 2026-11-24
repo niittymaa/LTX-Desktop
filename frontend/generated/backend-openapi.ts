@@ -1422,6 +1422,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/mcp/client-config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Route Mcp Client Config */
+        get: operations["route_mcp_client_config_api_mcp_client_config_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mcp/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Route Mcp Status */
+        get: operations["route_mcp_status_api_mcp_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mcp/token/rotate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Route Mcp Rotate Token */
+        post: operations["route_mcp_rotate_token_api_mcp_token_rotate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/models": {
         parameters: {
             query?: never;
@@ -1966,6 +2017,10 @@ export interface components {
             lockedSeed?: number | null;
             /** Ltxapikey */
             ltxApiKey?: string | null;
+            /** Mcpallowlocalimport */
+            mcpAllowLocalImport?: boolean | null;
+            /** Mcpenabled */
+            mcpEnabled?: boolean | null;
             /** Modelsdir */
             modelsDir?: string | null;
             /** Mpsconv3Dasconv2Denabled */
@@ -5685,6 +5740,48 @@ export interface components {
             /** Upgrade Message */
             upgrade_message?: string | null;
         };
+        /** McpClientConfigResponse */
+        McpClientConfigResponse: {
+            /** Stdioconfig */
+            stdioConfig: {
+                [key: string]: unknown;
+            };
+            /** Streamablehttpconfig */
+            streamableHttpConfig: {
+                [key: string]: unknown;
+            };
+            /** Token */
+            token: string;
+            /** Url */
+            url: string;
+        };
+        /** McpStatusResponse */
+        McpStatusResponse: {
+            /** Allowlocalimport */
+            allowLocalImport: boolean;
+            /** Enabled */
+            enabled: boolean;
+            /** Port */
+            port?: number | null;
+            /** Reason */
+            reason?: string | null;
+            /** Serving */
+            serving: boolean;
+            /**
+             * Tokenconfigured
+             * @default false
+             */
+            tokenConfigured: boolean;
+            /** Url */
+            url?: string | null;
+        };
+        /** McpTokenResponse */
+        McpTokenResponse: {
+            /** Createdat */
+            createdAt: number;
+            /** Token */
+            token: string;
+        };
         /** MediaSpec */
         MediaSpec: {
             /** Demo Video */
@@ -6195,6 +6292,16 @@ export interface components {
              * @default 42
              */
             lockedSeed: number;
+            /**
+             * Mcpallowlocalimport
+             * @default false
+             */
+            mcpAllowLocalImport: boolean;
+            /**
+             * Mcpenabled
+             * @default false
+             */
+            mcpEnabled: boolean;
             /**
              * Modelsdir
              * @default
@@ -10340,6 +10447,120 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StatusResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPErrorResponse"];
+                };
+            };
+        };
+    };
+    route_mcp_client_config_api_mcp_client_config_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["McpClientConfigResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPErrorResponse"];
+                };
+            };
+        };
+    };
+    route_mcp_status_api_mcp_status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["McpStatusResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPErrorResponse"];
+                };
+            };
+        };
+    };
+    route_mcp_rotate_token_api_mcp_token_rotate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["McpTokenResponse"];
                 };
             };
             /** @description Client Error */

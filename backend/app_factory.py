@@ -38,8 +38,10 @@ from _routes.feature_flags import router as feature_flags_router
 from _routes.settings import router as settings_router
 from _routes.ui_preferences import router as ui_preferences_router
 from _routes.remote import router as remote_status_router
+from _routes.mcp import router as mcp_status_router
 from api_types import HTTPErrorResponse
 from http_exception_handlers import install_http_exception_handlers
+from mcp_server.controller import McpServerController, mcp_controller_from_app
 from security_headers import install_security_headers
 from remote.controller import RemoteExposureController, remote_controller_from_app
 from state import get_state_service, init_state_service
@@ -81,18 +83,24 @@ def create_app(
         if controller is None:
             raise RuntimeError("Desktop app is missing RemoteExposureController")
         controller.sync()
+        mcp_controller = mcp_controller_from_app(app)
+        if mcp_controller is None:
+            raise RuntimeError("Desktop app is missing McpServerController")
+        mcp_controller.sync()
         handler.assistant.start()
         try:
             yield
         finally:
             await handler.assistant.shutdown()
             handler.assistant_runtime.stop()
+            mcp_controller.stop()
             controller.stop()
             handler.generation_queue.stop()
 
     app = FastAPI(title=title, responses=DEFAULT_ERROR_RESPONSES, lifespan=lifespan)
     app.state.admin_token = admin_token  # type: ignore[attr-defined]
     app.state.remote_controller = RemoteExposureController(handler)  # type: ignore[attr-defined]
+    app.state.mcp_controller = McpServerController(handler)  # type: ignore[attr-defined]
     app.dependency_overrides[get_state_service] = lambda: handler
     init_state_service(handler)
     app.add_middleware(
@@ -168,5 +176,6 @@ def create_app(
     app.include_router(ui_preferences_router)
     app.include_router(hf_auth_router)
     app.include_router(remote_status_router)
+    app.include_router(mcp_status_router)
 
     return app

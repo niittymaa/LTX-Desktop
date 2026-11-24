@@ -159,6 +159,10 @@ class AppSettings(SettingsBaseModel):
     # settings.json cannot expose the engine after an upgrade. Unknown values (PoC tunnel modes)
     # coerce to off.
     remote_exposure: RemoteExposureSetting = "off"
+    # Local loopback MCP (Model Context Protocol) server. Default off (fail-closed).
+    mcp_enabled: bool = False
+    # Opt-in gate for MCP import_asset(path) ingesting local media files from disk.
+    mcp_allow_local_import: bool = False
     activity_dashboard_selections: DashboardSelection = Field(default_factory=DashboardSelection)
 
     @field_validator("budget_mode", mode="before")
@@ -271,6 +275,8 @@ class SettingsResponse(SettingsBaseModel):
     nag_scale: float = DEFAULT_NAG_SCALE
     show_nag_strength_controls: bool = False
     remote_exposure: RemoteExposureSetting = "off"
+    mcp_enabled: bool = False
+    mcp_allow_local_import: bool = False
     activity_dashboard_selections: DashboardSelection = Field(default_factory=DashboardSelection)
 
 

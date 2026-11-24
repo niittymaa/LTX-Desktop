@@ -45,6 +45,8 @@ class TestGetSettings:
         assert data["lockedSeed"] == 42
         assert data["useConvVae"] is resolved_use_conv_vae(AppSettings())
         assert data["remoteExposure"] == "off"
+        assert data["mcpEnabled"] is False
+        assert data["mcpAllowLocalImport"] is False
         assert data["activityDashboardSelections"] == {
             "range": "7d",
             "models": [],

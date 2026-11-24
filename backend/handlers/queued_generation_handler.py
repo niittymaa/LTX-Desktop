@@ -134,7 +134,7 @@ if TYPE_CHECKING:
     from runtime_config.runtime_config import RuntimeConfig
 
 
-AnalyticsClient = Literal["desktop", "remote"]
+AnalyticsClient = Literal["desktop", "remote", "mcp"]
 # Set only when the user did not ask for the job directly; analytics reports those as "user".
 AnalyticsRequestedBy = Literal["assistant"]
 

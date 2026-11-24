@@ -9,6 +9,7 @@ from fastapi import APIRouter, Depends, Request
 from _routes._admin_guard import guard_admin_permission
 from state.app_settings import SettingsResponse, UpdateSettingsRequest, to_settings_response
 from api_types import GeminiModelsResponsePayload, StatusResponse
+from mcp_server.controller import mcp_controller_from_app
 from remote.controller import remote_controller_from_app
 from state import get_state_service
 from app_handler import AppHandler
@@ -55,6 +56,11 @@ def route_post_settings(
         controller = remote_controller_from_app(request.app)
         if controller is not None:
             controller.sync()
+
+    if "mcp_enabled" in changed_roots:
+        mcp_controller = mcp_controller_from_app(request.app)
+        if mcp_controller is not None:
+            mcp_controller.sync()
 
     return StatusResponse(status="ok")
 

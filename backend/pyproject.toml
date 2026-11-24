@@ -63,8 +63,13 @@ dependencies = [
 ]
 
 [tool.uv]
-# The Windows inference wheel above only supports the bundled CPython 3.13 runtime.
-environments = ["sys_platform != 'win32' or python_version == '3.13'"]
+# Restrict lockfile resolution to supported desktop platforms (the Windows
+# inference wheel only supports the bundled CPython 3.13 runtime).
+environments = [
+    "sys_platform == 'darwin'",
+    "sys_platform == 'linux'",
+    "sys_platform == 'win32' and python_version == '3.13'",
+]
 
 [[tool.uv.index]]
 name = "pytorch-cu128"
@@ -129,6 +134,7 @@ desktop = [
     "starlette>=1.6.0",
     "uvicorn[standard]>=0.30.0",
     "python-multipart>=0.0.32",
+    "mcp>=2.3.0,<3",
 ]
 test = [
     "pytest>=8.0",

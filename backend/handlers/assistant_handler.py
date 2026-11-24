@@ -9,7 +9,7 @@ from collections.abc import AsyncGenerator, AsyncIterable, Callable, Coroutine
 from contextlib import suppress
 from dataclasses import dataclass, field
 from threading import RLock
-from typing import Any, get_args
+from typing import Any, Literal, get_args
 
 from pydantic_ai import Agent, AgentRunResult, DeferredToolRequests, DeferredToolResults, RunContext, capture_run_messages
 from pydantic_ai.capabilities import ProcessHistory
@@ -37,7 +37,7 @@ from services.assistant_media import ATTACHMENTS_HEADER, PreviewModel, read_prev
 from assistant_limits import ASSISTANT_LIMITS
 from logging_policy import log_background_exception
 from handlers.asset_handler import AssetHandler
-from handlers.queued_generation_handler import AnalyticsClient, QueuedGenerationHandler
+from handlers.queued_generation_handler import QueuedGenerationHandler
 from services.assistant_provider import AssistantProvider
 from services.llama_runtime import AssistantModelError
 from services.assistant_run import ASSISTANT_PAYLOAD_VERSION, AssistantRun
@@ -590,7 +590,7 @@ class AssistantHandler:
             queue_on_hold=on_hold,
         )
 
-    def enqueue(self, conversation_id: str, req: AssistantQueueRequest, *, origin: AnalyticsClient = "desktop") -> AssistantConversation:
+    def enqueue(self, conversation_id: str, req: AssistantQueueRequest, *, origin: Literal["desktop", "remote"] = "desktop") -> AssistantConversation:
         request = AssistantTurnRequest(request_id=req.id, conversation_id=conversation_id, origin=origin, **req.model_dump(exclude={"id"}))
         # Fail now, not when the message reaches the front and nobody is watching.
         self._select_model(None, request)
@@ -901,7 +901,7 @@ class AssistantHandler:
             self._progress[run_id] = AssistantProgress(active=True, activity=activity, text=text)
         self._notify(run_id)
 
-    async def turn(self, req: AssistantTurnRequest, *, origin: AnalyticsClient = "desktop") -> AssistantTurnResponse:
+    async def turn(self, req: AssistantTurnRequest, *, origin: Literal["desktop", "remote"] = "desktop") -> AssistantTurnResponse:
         return await self._dispatch(req.request_id, req.model_copy(update={"origin": origin}))
 
     async def continue_run(self, run_id: str) -> AssistantTurnResponse:

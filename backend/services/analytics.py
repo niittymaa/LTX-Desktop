@@ -277,7 +277,7 @@ def queued_generation_details(
     if not isinstance(analytics, dict):
         return None
     client = analytics.get("client")
-    if not isinstance(client, str) or client not in ("desktop", "remote"):
+    if not isinstance(client, str) or client not in ("desktop", "remote", "mcp"):
         return None
 
     details: dict[str, JSONValue] = {

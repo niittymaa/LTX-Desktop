@@ -369,6 +369,28 @@
             ],
             "title": "Ltxapikey"
           },
+          "mcpAllowLocalImport": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mcpallowlocalimport"
+          },
+          "mcpEnabled": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mcpenabled"
+          },
           "modelsDir": {
             "anyOf": [
               {
@@ -11448,6 +11470,118 @@
         "title": "LtxUpgradeRecommendationResponse",
         "type": "object"
       },
+      "McpClientConfigResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "stdioConfig": {
+            "additionalProperties": true,
+            "title": "Stdioconfig",
+            "type": "object"
+          },
+          "streamableHttpConfig": {
+            "additionalProperties": true,
+            "title": "Streamablehttpconfig",
+            "type": "object"
+          },
+          "token": {
+            "title": "Token",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "token",
+          "streamableHttpConfig",
+          "stdioConfig"
+        ],
+        "title": "McpClientConfigResponse",
+        "type": "object"
+      },
+      "McpStatusResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "allowLocalImport": {
+            "title": "Allowlocalimport",
+            "type": "boolean"
+          },
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "port": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Port"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "serving": {
+            "title": "Serving",
+            "type": "boolean"
+          },
+          "tokenConfigured": {
+            "default": false,
+            "title": "Tokenconfigured",
+            "type": "boolean"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          }
+        },
+        "required": [
+          "enabled",
+          "allowLocalImport",
+          "serving"
+        ],
+        "title": "McpStatusResponse",
+        "type": "object"
+      },
+      "McpTokenResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "createdAt": {
+            "title": "Createdat",
+            "type": "integer"
+          },
+          "token": {
+            "title": "Token",
+            "type": "string"
+          }
+        },
+        "required": [
+          "token",
+          "createdAt"
+        ],
+        "title": "McpTokenResponse",
+        "type": "object"
+      },
       "MediaSpec": {
         "properties": {
           "demo_video": {
@@ -12714,6 +12848,16 @@
             "default": 42,
             "title": "Lockedseed",
             "type": "integer"
+          },
+          "mcpAllowLocalImport": {
+            "default": false,
+            "title": "Mcpallowlocalimport",
+            "type": "boolean"
+          },
+          "mcpEnabled": {
+            "default": false,
+            "title": "Mcpenabled",
+            "type": "boolean"
           },
           "modelsDir": {
             "default": "",
@@ -18509,6 +18653,129 @@
         "summary": "Route Delete Lora Installation",
         "tags": [
           "loras"
+        ]
+      }
+    },
+    "/api/mcp/client-config": {
+      "get": {
+        "operationId": "route_mcp_client_config_api_mcp_client_config_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpClientConfigResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        },
+        "summary": "Route Mcp Client Config",
+        "tags": [
+          "mcp"
+        ]
+      }
+    },
+    "/api/mcp/status": {
+      "get": {
+        "operationId": "route_mcp_status_api_mcp_status_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpStatusResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        },
+        "summary": "Route Mcp Status",
+        "tags": [
+          "mcp"
+        ]
+      }
+    },
+    "/api/mcp/token/rotate": {
+      "post": {
+        "operationId": "route_mcp_rotate_token_api_mcp_token_rotate_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpTokenResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPErrorResponse"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPErrorResponse"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        },
+        "summary": "Route Mcp Rotate Token",
+        "tags": [
+          "mcp"
         ]
       }
     },

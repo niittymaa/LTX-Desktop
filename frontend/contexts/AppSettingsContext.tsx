@@ -52,6 +52,8 @@ export interface AppSettings {
   /** Show the per-run NAG strength row under the negative prompt (Desktop and paired devices). */
   showNagStrengthControls: boolean
   remoteExposure: RemoteExposure
+  mcpEnabled: boolean
+  mcpAllowLocalImport: boolean
   /** Brave runs over-budget and untested jobs after a confirm; Cautious refuses them. */
   budgetMode: BudgetMode
   neverSplitIntoParts: boolean
@@ -84,6 +86,8 @@ export const DEFAULT_APP_SETTINGS: AppSettings = {
   nagScale: 11,
   showNagStrengthControls: false,
   remoteExposure: 'off',
+  mcpEnabled: false,
+  mcpAllowLocalImport: false,
   budgetMode: 'brave',
   neverSplitIntoParts: false,
   skipBudgetRiskConfirm: false,
@@ -172,6 +176,8 @@ function normalizeAppSettings(data: Partial<AppSettings>): AppSettings {
     showNagStrengthControls:
       data.showNagStrengthControls ?? DEFAULT_APP_SETTINGS.showNagStrengthControls,
     remoteExposure: data.remoteExposure === 'lan' ? 'lan' : DEFAULT_APP_SETTINGS.remoteExposure,
+    mcpEnabled: data.mcpEnabled ?? DEFAULT_APP_SETTINGS.mcpEnabled,
+    mcpAllowLocalImport: data.mcpAllowLocalImport ?? DEFAULT_APP_SETTINGS.mcpAllowLocalImport,
     budgetMode: readBudgetMode(data.budgetMode),
     neverSplitIntoParts: data.neverSplitIntoParts ?? DEFAULT_APP_SETTINGS.neverSplitIntoParts,
     skipBudgetRiskConfirm: data.skipBudgetRiskConfirm ?? DEFAULT_APP_SETTINGS.skipBudgetRiskConfirm,

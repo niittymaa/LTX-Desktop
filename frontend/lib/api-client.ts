@@ -488,6 +488,12 @@ export function createApiClient(fetchImpl: BackendFetch) {
 
     getRemoteStatus: makeEndpointClient(fetchImpl, '/api/remote/status', 'get'),
 
+    getMcpStatus: makeEndpointClient(fetchImpl, '/api/mcp/status', 'get'),
+
+    getMcpClientConfig: makeEndpointClient(fetchImpl, '/api/mcp/client-config', 'get'),
+
+    rotateMcpToken: makeEndpointClient(fetchImpl, '/api/mcp/token/rotate', 'post'),
+
     listRemoteDevices: makeEndpointClient(fetchImpl, '/api/remote/devices', 'get'),
 
     revokeRemoteDevice(

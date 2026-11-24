@@ -131,6 +131,7 @@ For the architecture and API boundary, see [`docs/remote-lan.md`](docs/remote-la
 - [`docs/hardware-compatibility.md`](docs/hardware-compatibility.md): will it run on your machine — per-hardware capabilities for generation, editing, and IC-LoRA
 - [`docs/api-keys-and-privacy.md`](docs/api-keys-and-privacy.md): LTX, fal, and Gemini keys, cost, and privacy
 - [`docs/desktop-assistant.md`](docs/desktop-assistant.md): the Assistant's tools, runs, providers, and local runtime
+- [`docs/mcp-server.md`](docs/mcp-server.md): Model Context Protocol (MCP) server for external AI agents and coding assistants
 - [`docs/remote-lan.md`](docs/remote-lan.md): Remote architecture and API boundary
 - [`docs/gen-space-and-video-editor.md`](docs/gen-space-and-video-editor.md): the original Gen Space and Video Editor interfaces
 - [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md): architecture, commands, and build steps for developers
