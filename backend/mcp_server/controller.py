@@ -103,9 +103,10 @@ class McpServerController:
             "mcpServers": {
                 "ltx-desktop": {
                     "command": sys.executable,
-                    "args": ["-m", "mcp_server.stdio_bridge"],
+                    "args": ["-B", "-m", "mcp_server.stdio_bridge"],
                     "env": {
                         "PYTHONPATH": backend_dir,
+                        "PYTHONDONTWRITEBYTECODE": "1",
                     },
                 }
             }

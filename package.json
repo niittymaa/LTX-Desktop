@@ -37,7 +37,10 @@
     "build:frontend": "vite build && pnpm build:remote",
     "build:remote": "vite build --config vite.remote.config.ts",
     "start:unpacked:mac": "open release/mac-arm64/LTX\\ Desktop.app",
-    "start:unpacked:win": "powershell -Command \"& '.\\release\\win-unpacked\\LTX Desktop.exe'\""
+    "start:unpacked:win": "powershell -Command \"& '.\\release\\win-unpacked\\LTX Desktop.exe'\"",
+    "app:sync": "bash update-and-run.sh --local --no-launch",
+    "app:update": "bash update-and-run.sh",
+    "app:check": "bash update-and-run.sh --check"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

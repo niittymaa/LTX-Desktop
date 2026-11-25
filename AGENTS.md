@@ -137,3 +137,11 @@ Test observable behaviour through the public interface.
 When you touch a file that already has tests, delete any that break the rules
 above. On legacy surfaces (GenSpace and similar), keep the smallest set that
 still catches the cases above. Do not grow those suites.
+
+## Installed macOS App Sync
+
+Always keep `/Applications/LTX Desktop.app` installed, visible in macOS Applications (`Apps.app` / Spotlight / LaunchServices), and in sync with custom repo features:
+
+- After finishing app feature changes on macOS, run `pnpm app:sync` (or `./update-and-run.sh --local` to also relaunch) and verify with `pnpm app:check`.
+- To pull upstream updates while preserving local features and reinstalling `/Applications/LTX Desktop.app`, run `pnpm app:update` (`./update-and-run.sh`).
+- Never stage dotfiles inside `/Applications/` (stage in a temporary directory outside `/Applications/` on the same APFS volume) and never leave unpacked `release/mac-arm64/LTX Desktop.app` registered in LaunchServices or indexed by Spotlight alongside `/Applications/LTX Desktop.app`.

@@ -407,7 +407,7 @@ export async function startPythonBackend({ askUser = true }: { askUser?: boolean
       const preamble = `${PY_REMOVE_CWD_FROM_DLL_SEARCH}import sys; sys.path.insert(0, r"${backendPath}"); import runpy; runpy.run_path(r"${mainPy}", run_name="__main__")`
       pythonArgs = ['-u', '-c', preamble]
     } else {
-      pythonArgs = isDev ? ['-Xfrozen_modules=off', '-u', mainPy] : ['-u', mainPy]
+      pythonArgs = isDev ? ['-Xfrozen_modules=off', '-u', mainPy] : ['-B', '-u', mainPy]
     }
 
     // Generate auth token and admin token for this backend session
@@ -420,6 +420,7 @@ export async function startPythonBackend({ askUser = true }: { askUser?: boolean
         ...process.env,
         PYTHONUNBUFFERED: '1',
         PYTHONNOUSERSITE: '1',
+        ...(!isDev ? { PYTHONDONTWRITEBYTECODE: '1' } : {}),
         // Put the interpreter's bin/ on PATH so torch's C++ extension loader can find
         // `ninja` — required to load mps-sdpa's zero-copy `mpsgraph_zc` attention
         // backend on Apple Silicon (even a prebuilt cache needs ninja to load; without
